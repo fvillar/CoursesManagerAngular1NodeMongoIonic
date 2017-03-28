@@ -30,7 +30,8 @@ angular.module('courseManager', ['ionic', 'courseManager.controllers', 'courseMa
         url: '/home',
         views: {
           'menuContent': {
-            templateUrl: 'templates/home.html'
+            templateUrl: 'templates/home.html',
+            controller: 'HomeController'
           }
         }
       })
@@ -40,7 +41,7 @@ angular.module('courseManager', ['ionic', 'courseManager.controllers', 'courseMa
         views: {
           'menuContent': {
             templateUrl: 'templates/course.html',
-            controller: 'PlaylistCtrl'
+            controller: 'UpdateController'
           }
         }
       })

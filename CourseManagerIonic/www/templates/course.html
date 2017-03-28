@@ -1,5 +1,12 @@
-<ion-view view-title="Course">
+<ion-view view-title="Course Detail">
   <ion-content>
-    <h1>Course</h1>
+    <div class="card">
+      <div class="item item-body item-text-wrap">
+       <h2>{{course.title}}
+          <span style="font-size:75%">{{course.length}}</span>
+          <span class="badge badge-assertive">{{course.category}}</span></h2>
+        <p>{{course.authorName}}</p>
+      </div>
+    </div>
   </ion-content>
 </ion-view>

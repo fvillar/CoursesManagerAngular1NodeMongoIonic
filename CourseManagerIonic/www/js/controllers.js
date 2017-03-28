@@ -1,45 +1,64 @@
 angular.module('courseManager.controllers', [])
 
-  .controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+  .controller('AppCtrl', ['$scope', '$ionicModal', '$rootScope', '$state', 'loginFactory',
+    function ($scope, $ionicModal, $rootScope, $state, loginFactory) {
 
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
+      // With the new view caching in Ionic, Controllers are only called
+      // when they are recreated or on app start, instead of every page change.
+      // To listen for when this page is active (for example, to refresh data),
+      // listen for the $ionicView.enter event:
+      //$scope.$on('$ionicView.enter', function(e) {
+      //});
 
-    // Form data for the login modal
-    $scope.loginData = {};
+      $scope.showAlert;
+      $scope.message = 'Username or password is incorrect';
 
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $scope
-    }).then(function (modal) {
-      $scope.modal = modal;
-    });
+      // Form data for the login modal
+      $scope.loginData = {};
 
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function () {
-      $scope.modal.hide();
-    };
+      // Create the login modal that we will use later
+      $ionicModal.fromTemplateUrl('templates/login.html', {
+        scope: $scope
+      }).then(function (modal) {
+        $scope.modal = modal;
+      });
 
-    // Open the login modal
-    $scope.login = function () {
-      $scope.modal.show();
-    };
+      // Triggered in the login modal to close it
+      $scope.closeLogin = function () {
+        $scope.modal.hide();
+      };
 
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function () {
-      console.log('Doing login', $scope.loginData);
+      // Open the login modal
+      $scope.login = function () {
+        $scope.modal.show();
+      };
 
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function () {
-        $scope.closeLogin();
-      }, 1000);
-    };
-  })
+      // Perform the login action when the user submits the login form
+      $scope.doLogin = function () {
+
+        loginFactory.query({
+          username: $scope.loginData.username
+        }).$promise.then(
+          (response) => {
+            if (response.length > 0) {
+              if (response[0].password == $scope.loginData.password) {
+                $state.go('app.home');
+                $rootScope.username = $scope.loginData.username;
+                $scope.modal.hide();
+                $scope.loginData = {};
+                $scope.showAlert = false;                
+              } else
+                $scope.showAlert = true;
+            } else {
+              $scope.showAlert = true;
+            }
+          },
+          (response) => {
+            $scope.showAlert = true
+          }
+          );
+      };
+    }])
 
   .controller('HomeController', ['$scope', '$rootScope', '$state', '$stateParams', 'coursesFactory', 'courseFactory',
     function ($scope, $rootScope, $state, $stateParams, coursesFactory, courseFactory) {
@@ -53,6 +72,9 @@ angular.module('courseManager.controllers', [])
         (response) => {
           $scope.courses = response;
           $scope.loading = false;
+
+          console.log('res',response, $rootScope.username);
+          
         },
         (response) => {
           $scope.message = "Error: " + response.status + " " + response.statusText;
@@ -160,36 +182,7 @@ angular.module('courseManager.controllers', [])
       };
     }])
 
-  .controller('LoginController', ['$scope', '$rootScope', '$state', '$stateParams', 'loginFactory',
-    function ($scope, $rootScope, $state, $stateParams, loginFactory) {
-      $scope.username = '';
-      $scope.password = '';
-      $scope.showAlert = false;
-      $scope.message = 'Username or password is incorrect';
-
-      $scope.login = () => {
-
-        loginFactory.query({
-          username: $scope.username
-        }).$promise.then(
-          (response) => {
-            if (response.length > 0) {
-              if (response[0].password == $scope.password) {
-                $state.go('app.home');
-                $rootScope.username = $scope.username;
-              } else
-                $scope.showAlert = true;
-            } else {
-              $scope.showAlert = true;
-            }
-          },
-          (response) => {
-            $scope.showAlert = true
-          }
-          );
-      }
-
-    }])
+  
 
   .controller('RegisterController', ['$scope', '$state', 'registerFactory',
     function ($scope, $state, registerFactory) {
