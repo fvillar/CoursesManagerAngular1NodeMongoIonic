@@ -46,7 +46,7 @@ angular.module('courseManager.controllers', [])
                 $rootScope.username = $scope.loginData.username;
                 $scope.modal.hide();
                 $scope.loginData = {};
-                $scope.showAlert = false;                
+                $scope.showAlert = false;
               } else
                 $scope.showAlert = true;
             } else {
@@ -66,15 +66,15 @@ angular.module('courseManager.controllers', [])
       $scope.courses = [];
       $scope.loading = true;
 
+      $scope.shouldShowDelete = false;
+      $scope.listCanSwipe = true
+
       coursesFactory.query({
         username: $rootScope.username
       }).$promise.then(
         (response) => {
           $scope.courses = response;
           $scope.loading = false;
-
-          console.log('res',response, $rootScope.username);
-          
         },
         (response) => {
           $scope.message = "Error: " + response.status + " " + response.statusText;
@@ -82,7 +82,7 @@ angular.module('courseManager.controllers', [])
         );
 
       $scope.deleteCourse = (id) => {
-        courseFactory.delete(id,
+        courseFactory.delete({ id: id },
           (response) => {
             $scope.courses = coursesFactory.query({
               username: $rootScope.username
@@ -182,7 +182,7 @@ angular.module('courseManager.controllers', [])
       };
     }])
 
-  
+
 
   .controller('RegisterController', ['$scope', '$state', 'registerFactory',
     function ($scope, $state, registerFactory) {

@@ -1,9 +1,16 @@
 <ion-view view-title="Courses">
+
   <ion-content>
-    <ion-list class="list">
+    <ion-list class="list" show-delete="shouldShowDelete" can-swipe="listCanSwipe">
+
       <ion-item class="item" ng-repeat="course in courses" href="#/app/course/{{course.Id}}">
         {{course.title}}
+        
+        <ion-option-button class="button-assertive" ng-click="deleteCourse({{course.Id}})">
+          Delete
+        </ion-option-button>
       </ion-item>
+
     </ion-list>
   </ion-content>
 </ion-view>
