@@ -93,6 +93,9 @@ angular.module('courseManager.controllers', [])
           }
         );
       };
+      $scope.addCourse = () =>{
+        $state.go('app.newCourse');
+      } 
 
     }])
 
@@ -169,20 +172,15 @@ angular.module('courseManager.controllers', [])
       $scope.addCourse = () => {
 
         courseFactory.save($scope.course,
-          (response) => {
+          (response) => {            
             $scope.courses = coursesFactory.query();
           },
           (response) => {
-            $scope.message = "Error: " + response.status + " " + response.statusText;
           }
-        );
-
-        $state.go('app.home');
+        );       
 
       };
     }])
-
-
 
   .controller('RegisterController', ['$scope', '$state', 'registerFactory',
     function ($scope, $state, registerFactory) {

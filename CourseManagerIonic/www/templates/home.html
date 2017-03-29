@@ -5,12 +5,15 @@
 
       <ion-item class="item" ng-repeat="course in courses" href="#/app/course/{{course.Id}}">
         {{course.title}}
-        
+
         <ion-option-button class="button-assertive" ng-click="deleteCourse({{course.Id}})">
           Delete
         </ion-option-button>
       </ion-item>
 
     </ion-list>
+    <div class="button-bar">
+      <a class="button" ng-click="addCourse()">Add Course</a>
+    </div>
   </ion-content>
 </ion-view>

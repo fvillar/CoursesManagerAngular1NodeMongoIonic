@@ -56,6 +56,26 @@ angular.module('courseManager', ['ionic', 'courseManager.controllers', 'courseMa
         }
       })
 
+      .state('app.newCourse', {
+        url: '/newCourse',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/newCourse.html',
+            controller: 'AddController'
+          }
+        }
+      })
+
+      .state('app.newAuthor', {
+        url: '/newAuthor',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/newAuthor.html',
+            controller: 'AddAuthorController'
+          }
+        }
+      })
+
       .state('app.aboutus', {
         url: '/aboutus',
         views: {
@@ -63,27 +83,7 @@ angular.module('courseManager', ['ionic', 'courseManager.controllers', 'courseMa
             templateUrl: 'templates/aboutUs.html'
           }
         }
-      })
-
-    // .state('app.playlists', {
-    //   url: '/playlists',
-    //   views: {
-    //     'menuContent': {
-    //       templateUrl: 'templates/playlists.html',
-    //       controller: 'PlaylistsCtrl'
-    //     }
-    //   }
-    // })
-
-    // .state('app.single', {
-    //   url: '/playlists/:playlistId',
-    //   views: {
-    //     'menuContent': {
-    //       templateUrl: 'templates/playlist.html',
-    //       controller: 'PlaylistCtrl'
-    //     }
-    //   }
-    // });
+      });
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/aboutus');
   });

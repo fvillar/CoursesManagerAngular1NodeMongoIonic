@@ -1,0 +1,28 @@
+<ion-view view-title="Add Author">  
+  <ion-content>    
+
+    <div class="card">
+      <div class="item item-divider">
+        Add Author
+      </div>
+      <div class="list">
+        <div class="item item-body item-text-wrap">
+
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input type="text" placeholder="First Name" ng-model="author.firstName">
+        </label>
+
+         <label class="item item-input">
+          <span class="input-label">Last Name</span>
+          <input type="text" placeholder="Last Name" ng-model="author.lastName">
+        </label>
+
+        </div>
+      </div>
+
+      <div class="button-bar">
+        <a class="button" ng-click="addAuthor()">Save</a>
+      </div>
+  </ion-content>
+</ion-view>
